@@ -20,6 +20,10 @@ public class ServerThreadThread extends Thread {
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()
             ));
+            this.printWriter = new PrintWriter(socket.getOutputStream(),true);
+            while(true) {
+                serverThread.sendMessage(bufferedReader.readLine());
+            }
         } catch (Exception e) {
             serverThread.getServerThreadThreads().remove(this);
         }

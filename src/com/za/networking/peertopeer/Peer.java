@@ -10,8 +10,8 @@ import java.net.Socket;
 public class Peer {
     public static void main(String[] args) throws Exception {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((System.in)));
-        System.out.println("> enter username & port # for this peer:");
-        String[] setupValues = bufferedReader.readLine().split("");
+        System.out.println("> Insira o username e a porta para esse peer:");
+        String[] setupValues = bufferedReader.readLine().split(" ");
         ServerThread serverThread = new ServerThread(setupValues[1]);
         serverThread.start();
         new Peer().updateListenToPeers(bufferedReader, setupValues[0], serverThread);
@@ -19,10 +19,10 @@ public class Peer {
     }
 
     public void updateListenToPeers(BufferedReader bufferedReader, String username, ServerThread serverThread) throws Exception {
-        System.out.println("> enter (space separated) hostname:port#");
-        System.out.println(" peers to receive messages from (s to skip):");
+        System.out.println("> Insira (separado por espaço) hostname:port#");
+        System.out.println(" Peer para receber mensagem de (s para pular):");
         String input = bufferedReader.readLine();
-        String[] inputValues = input.split("");
+        String[] inputValues = input.split(" ");
         if (!input.equals("s")) for (int i = 0; i < inputValues.length; i++) {
             String[] address = inputValues[i].split(":");
             Socket socket = null;
@@ -33,7 +33,7 @@ public class Peer {
                 if (socket != null) {
                     socket.close();
                 }else {
-                    System.out.println("invalid input. skipping to nest step.");
+                    System.out.println("Input invalido. Indo para a proxima etapa.");
                 }
             }
         }
@@ -42,7 +42,7 @@ public class Peer {
 
     public void communicate(BufferedReader bufferedReader, String username, ServerThread serverThread) {
         try{
-            System.out.println("> you can now communicate (e to exit, c to change)");
+            System.out.println(">Agora voce pode conversar (e para sair, c para mudar)");
             boolean flag = true;
             while (flag){
                 String message = bufferedReader.readLine();
